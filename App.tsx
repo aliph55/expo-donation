@@ -1,20 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
+import Auth from "./components/Auth";
+import { Provider } from "react-redux";
+import store from "./redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./screens/Home/Home";
+import Payment from "./screens/Payment/Payment";
+import SingleDonationItem from "./screens/SingleDonationItem/SingleDonationItem";
+
+const Stack = createNativeStackNavigator();
+
+const MainContainer = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Auth" component={Auth} />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            header: () => null,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name="Payment" component={Payment} />
+        <Stack.Screen
+          name="SingleDonationItem"
+          component={SingleDonationItem}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <MainContainer />
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
